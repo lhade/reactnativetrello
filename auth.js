@@ -1,8 +1,8 @@
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "./app";
-//import { auth } from "@react-native-firebase/auth";
+import { auth } from "@react-native-firebase/auth";
 
-//const auth = getAuth(app);
+const auth = getAuth(app);
 
 export function connectUser(email, password) {
     return new Promise((res, rej) => {
