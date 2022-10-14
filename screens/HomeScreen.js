@@ -1,10 +1,12 @@
 import { useNavigation } from '@react-navigation/core'
-import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { auth } from '../firebase'
+import React, {useEffect, useState} from "react";
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { addColonne } from '../database';
+import { auth } from '../firebase';
 
 const HomeScreen = () => {
   const navigation = useNavigation()
+  const [nom, setNom] =  useState('');
 
   const handleSignOut = () => {
     auth
@@ -17,6 +19,19 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Text>Add colonne</Text>
+      <TextInput
+            placeholder="Nom Colonne"
+            value={nom}
+            onChangeText={text => setNom(text)}
+            style={styles.input}
+          />
+          <TouchableOpacity
+        onPress={addColonne(auth.currentUser?.email, {nom})}
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>Ajouter colonne</Text>
+      </TouchableOpacity>
       <Text>Email: {auth.currentUser?.email}</Text>
       <TouchableOpacity
         onPress={handleSignOut}
@@ -43,10 +58,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 40,
+    justifyContent: 'flex-end'
   },
   buttonText: {
     color: 'white',
     fontWeight: '700',
     fontSize: 16,
+    justifyContent: 'flex-end'
   },
 })
